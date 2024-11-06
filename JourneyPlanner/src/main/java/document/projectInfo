@@ -1,0 +1,12 @@
+여행 id : pk
+areacode 지역코드
+citycode : 지역코드 내에 세부적인 도시코드
+start date : 출발일
+enddate : 도착일
+
+DB명 : plandb
+
+테이블 명
+- tbl_user
+- tbl_planner
+
