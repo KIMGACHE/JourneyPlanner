@@ -27,7 +27,7 @@ public class PlannerDaoImpl {
 	}
 	
 	public void init() throws ClassNotFoundException, SQLException {
-		Class.forName("oracle.jdbc.OracleDriver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		conn = DriverManager.getConnection(url,id,pw);
 	}
 	
