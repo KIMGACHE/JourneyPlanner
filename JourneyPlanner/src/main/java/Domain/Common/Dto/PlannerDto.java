@@ -1,17 +1,17 @@
 package Domain.Common.Dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class PlannerDto {
 	private int plannerid;
 	private int areacode;
 	private int citycode;
-	private LocalDateTime startdate;
-	private LocalDateTime enddate;
+	private LocalDate startdate;
+	private LocalDate enddate;
 	
 	public PlannerDto() {}
 	
-	public PlannerDto(int plannerid, int areacode, int citycode, LocalDateTime startdate, LocalDateTime enddate) {
+	public PlannerDto(int plannerid, int areacode, int citycode, LocalDate startdate, LocalDate enddate) {
 		super();
 		this.plannerid = plannerid;
 		this.areacode = areacode;
@@ -44,19 +44,19 @@ public class PlannerDto {
 		this.citycode = citycode;
 	}
 
-	public LocalDateTime getStartdate() {
+	public LocalDate getStartdate() {
 		return startdate;
 	}
 
-	public void setStartdate(LocalDateTime startdate) {
+	public void setStartdate(LocalDate startdate) {
 		this.startdate = startdate;
 	}
 
-	public LocalDateTime getEnddate() {
+	public LocalDate getEnddate() {
 		return enddate;
 	}
 
-	public void setEnddate(LocalDateTime enddate) {
+	public void setEnddate(LocalDate enddate) {
 		this.enddate = enddate;
 	}
 
