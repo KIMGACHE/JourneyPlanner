@@ -9,4 +9,34 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- default Servlet  -->
+  	<servlet>
+	    <servlet-name>default</servlet-name>
+	    <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+	    <init-param>
+	        <param-name>debug</param-name>
+	        <param-value>0</param-value>
+	    </init-param>
+	    <init-param>
+	        <param-name>listings</param-name>
+	        <param-value>false</param-value>
+	    </init-param>
+	    <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>default</servlet-name>
+	    <!-- 정적 자원 요청에 대한 URL 패턴 지정 -->
+	    <url-pattern>/resources/*</url-pattern>
+	</servlet-mapping>
+  
+  <!-- FrontController Servlet -->
+  <servlet>
+  	<servlet-name>FC</servlet-name>
+	<servlet-class>Controller.FrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    	<servlet-name>FC</servlet-name>
+  		<url-pattern>/</url-pattern>
+  </servlet-mapping>
 </web-app>
