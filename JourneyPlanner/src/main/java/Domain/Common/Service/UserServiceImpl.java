@@ -1,5 +1,6 @@
 package Domain.Common.Service;
 
+import Domain.Common.Dao.UserDaoImpl;
 import Domain.Common.Dto.UserDto;
 
 public class UserServiceImpl {

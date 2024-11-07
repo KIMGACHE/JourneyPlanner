@@ -11,7 +11,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
    
         <li class="nav-item dropdown m-4 " >
-          <a class="nav-link dropdown-toggle " s href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             도서관리
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
