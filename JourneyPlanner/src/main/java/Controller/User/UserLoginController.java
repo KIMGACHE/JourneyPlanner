@@ -66,7 +66,7 @@ public class UserLoginController implements SubController{
 			}
 			
 			// 서비스 실행
-			UserDto userDto = new UserDto(userid,password,null,null,null);
+			UserDto userDto = new UserDto(userid,password,null,0,null);
 			
 			Map<String,Object> rValue = userService.login(userDto, req.getSession());
 			
