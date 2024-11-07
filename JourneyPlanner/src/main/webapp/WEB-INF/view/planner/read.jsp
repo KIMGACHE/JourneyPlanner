@@ -8,9 +8,9 @@
 	
 	<!-- join.css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/user/join.css" />
-	
+	<% %>
 <meta charset="UTF-8">
-<title>플래너 작성</title>
+<title>플래너 수정</title>
 </head>
 <body>
 
@@ -27,7 +27,7 @@
 					
 					<form method="post"  style="width:400px;">
 						<div class="m-3">
-							<h1>Planner 작성</h1>
+							<h1>Planner 수정</h1>
 						</div>
 						<div class="m-3">
 							<label for="">지역</label>

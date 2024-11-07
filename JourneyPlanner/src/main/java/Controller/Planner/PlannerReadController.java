@@ -12,10 +12,10 @@ import Controller.SubController;
 import Domain.Common.Dto.PlannerDto;
 import Domain.Common.Service.PlannerServiceImpl;
 
-public class PlannerAddController implements SubController{
+public class PlannerReadController implements SubController{
 	private PlannerServiceImpl plannerService;
 	
-	public PlannerAddController() {
+	public PlannerReadController() {
 		this.plannerService = PlannerServiceImpl.getInstance();
 	}
 	
@@ -37,8 +37,8 @@ public class PlannerAddController implements SubController{
 			// Method==GET
 			String method = req.getMethod();
 			if("GET".equals(method)) {
-				System.out.println("[BC] GET /planner/add..");
-				req.getRequestDispatcher("/WEB-INF/view/planner/add.jsp").forward(req, resp);
+				System.out.println("[BC] GET /planner/read..");
+				req.getRequestDispatcher("/WEB-INF/view/planner/read.jsp").forward(req, resp);
 				return ;
 			}
 			

@@ -12,10 +12,10 @@ import Controller.SubController;
 import Domain.Common.Dto.PlannerDto;
 import Domain.Common.Service.PlannerServiceImpl;
 
-public class PlannerAddController implements SubController{
+public class PlannerUpdateController implements SubController{
 	private PlannerServiceImpl plannerService;
 	
-	public PlannerAddController() {
+	public PlannerUpdateController() {
 		this.plannerService = PlannerServiceImpl.getInstance();
 	}
 	
@@ -37,13 +37,14 @@ public class PlannerAddController implements SubController{
 			// Method==GET
 			String method = req.getMethod();
 			if("GET".equals(method)) {
-				System.out.println("[BC] GET /planner/add..");
-				req.getRequestDispatcher("/WEB-INF/view/planner/add.jsp").forward(req, resp);
+				System.out.println("[BC] GET /planner/update..");
+				req.getRequestDispatcher("/WEB-INF/view/planner/update.jsp").forward(req, resp);
 				return ;
 			}
 			
 			// Method==POST
 			// 파라미터 받기
+			Integer plannerid = Integer.parseInt(req.getParameter("plannerid"));
 			Integer areacode = Integer.parseInt(req.getParameter("areacode"));
 			Integer citycode = Integer.parseInt(req.getParameter("citycode"));
 			LocalDate startdate = LocalDate.parse(req.getParameter("startdate"),DateTimeFormatter.ISO_LOCAL_DATE);
@@ -53,14 +54,14 @@ public class PlannerAddController implements SubController{
 			// 유효성검사
 			
 			// 서비스실행
-			Map<String,Object> rvalue = plannerService.plannerAdd(plannerDto);
-			Boolean isAdded = (Boolean)rvalue.get("isAdded");
-			if(isAdded!=null && isAdded) {
+			Map<String,Object> rvalue = plannerService.plannerUpdate(plannerDto);
+			Boolean isUpdated = (Boolean)rvalue.get("isUpdated");
+			if(isUpdated!=null && isUpdated) {
 				// 뷰로이동
 				System.out.println("뷰로이동");
-				resp.sendRedirect(req.getContextPath()+"/");
+				resp.sendRedirect(req.getContextPath()+"/"); // 나중에는 유저정보->본인의 플래너 ->해당플래너->수정->해당플래너 이런식
 			} else {
-				req.getRequestDispatcher("/WEB-INF/view/planner/add.jsp").forward(req, resp);
+				req.getRequestDispatcher("/WEB-INF/view/planner/update.jsp").forward(req, resp);
 			}
 			
 		} catch(Exception e) {
