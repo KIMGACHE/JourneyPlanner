@@ -6,11 +6,14 @@ import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Controller.Planner.PlannerAddController;
+import Controller.Planner.PlannerListController;
+import Controller.Planner.PlannerReadController;
+import Controller.Planner.PlannerUpdateController;
 import Controller.User.UserJoinController;
 
 
@@ -32,7 +35,13 @@ public class FrontController extends HttpServlet {
 		map.put(path + "/", new HomeController());
 
 		// User
-		map.put(path + "/user/join", new UserJoinController());		 
+		map.put(path + "/user/join", new UserJoinController());
+		
+		// Planner
+		map.put(path + "/planner/add", new PlannerAddController());
+		map.put(path + "/planner/update", new PlannerUpdateController());
+		map.put(path + "/planner/list", new PlannerListController());
+		map.put(path + "/planner/read", new PlannerReadController());
 
 	}
 

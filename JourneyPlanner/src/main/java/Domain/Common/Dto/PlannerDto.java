@@ -1,7 +1,6 @@
 package Domain.Common.Dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class PlannerDto {
 	private int plannerid;
