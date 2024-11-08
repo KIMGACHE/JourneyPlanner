@@ -1,15 +1,11 @@
 package Controller.User;
 
-import java.net.URLEncoder;
-import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
-import Domain.Common.Dto.UserDto;
 import Domain.Common.Service.UserServiceImpl;
 
 public class UserLogoutController implements SubController{
@@ -49,8 +45,10 @@ public class UserLogoutController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /logout..");
-				
+			
 				HttpSession session = req.getSession();
+				//session.removeAttribute("role");
+				//session.removeAttribute("username");
 				session.invalidate();
 				
 				resp.sendRedirect(req.getContextPath() + "/");
@@ -60,17 +58,7 @@ public class UserLogoutController implements SubController{
 			//Method==POST-> 회원가입
 			
 			
-			// 파라미터 받기
-		
 			
-			// 유효성 확인
-			if(!isValid(null)) {
-				//
-			}
-			
-			// 서비스 실행
-			
-		
 			
 			
 		}catch(Exception e) {

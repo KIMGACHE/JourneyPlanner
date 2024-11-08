@@ -68,7 +68,7 @@ public class UserLoginController implements SubController{
 			// 서비스 실행
 			UserDto userDto = new UserDto(userid,password,null,0,null);
 			
-			Map<String,Object> rValue = userService.(userDto, req.getSession());
+			Map<String,Object> rValue = userService.login(userDto, req.getSession());
 			
 			
 			boolean isLogined = (boolean)rValue.get("success");
@@ -96,7 +96,7 @@ public class UserLoginController implements SubController{
 					 try{  throw new ServletException(e1); }catch(Exception e2) {e2.printStackTrace();}
 				}
 
-			System.out.println("[BC] Exception 발생.." + e);
+			System.out.println("[유저컨] Exception 발생.." + e);
 		}
 		
 		
