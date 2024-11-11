@@ -48,7 +48,7 @@ public class UserLoginController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /login..");
-				req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+				req.getRequestDispatcher("/WEB-INF/view/user/login.jsp").forward(req, resp);
 				return ;
 			}
 			
@@ -67,7 +67,7 @@ public class UserLoginController implements SubController{
 			
 			// 서비스 실행
 			UserDto userDto = new UserDto(userid,password,null,0,null);
-			
+			HttpSession
 			Map<String,Object> rValue = userService.login(userDto, req.getSession());
 			
 			
@@ -80,7 +80,7 @@ public class UserLoginController implements SubController{
 				return ;
 			}else {
 				req.setAttribute("message", message);
-				req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+				req.getRequestDispatcher("/WEB-INF/view/user/login.jsp").forward(req, resp);
 				return ;
 			}
 			

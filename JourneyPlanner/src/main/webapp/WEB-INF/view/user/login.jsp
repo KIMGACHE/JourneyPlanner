@@ -25,7 +25,7 @@
 				
 				<section>
 					
-					<form action="${pageContext.request.contextPath}/login" method="post"  style="width:400px;">
+					<form action="${pageContext.request.contextPath}/user/login" method="post"  style="width:400px;">
 						<div class="m-3">
 							<h1>로그인 페이지</h1>
 						</div>

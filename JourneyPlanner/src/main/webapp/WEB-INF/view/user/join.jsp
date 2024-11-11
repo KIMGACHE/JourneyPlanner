@@ -31,7 +31,7 @@
 						</div>
 						<div class="m-3">
 							<label for="">아이디 : </label>
-							<input type="text" class="form-control" name="username" />
+							<input type="text" class="form-control" name="userid" />
 						</div>
 						<div class="m-3">
 							<label for="">패스워드 : </label>
@@ -44,8 +44,8 @@
 						<div class="m-3">
 							<label for="">성별 : </label>
 							<select class="form-select"  name="gender">
-								<option value="ROLE_USER" selected>Male</option>
-								<option value="ROLE_MEMBER">Female</option>
+								<option value="M" selected>Male</option>
+								<option value="F">Female</option>
 							</select>
 						</div>
 						<div class="m-3">

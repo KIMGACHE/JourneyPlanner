@@ -3,6 +3,7 @@ package Controller.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
 import Domain.Common.Dto.UserDto;
@@ -41,6 +42,9 @@ public class UserMyInfoController implements SubController {
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /myinfo..");
+				HttpSession session = req.getSession();
+				String userid = (String)session.getAttribute("userid");
+				req.setAttribute("userid", userid);
 				req.getRequestDispatcher("/WEB-INF/view/user/myinfo.jsp").forward(req, resp);
 				return ;
 			}

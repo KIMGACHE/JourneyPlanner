@@ -136,7 +136,7 @@ public class UserServiceImpl {
 					returnValue = new HashMap();
 					//로그인된 상태인지 확인(tbl_Session에서 session조회)
 					
-					String username = (String) session.getAttribute("username");
+					String username = (String)session.getAttribute("username");
 					String role = (String)session.getAttribute("role");
 					
 					
@@ -158,7 +158,7 @@ public class UserServiceImpl {
 					//요청한 password 가 db에 저장된 password와 동일한지 확인
 					String pw = userDto.getPassword();	//RAW
 					String dbPw = dbUserDto.getPassword();		//en
-					if(pw.equals(dbPw)) {
+					if(!pw.equals(dbPw)) {
 						returnValue.put("success", false);
 						returnValue.put("message", "패스워드가 일치하지 않습니다.");
 						return returnValue;		

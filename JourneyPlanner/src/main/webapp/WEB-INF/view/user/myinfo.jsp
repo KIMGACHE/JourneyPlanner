@@ -20,7 +20,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<%
+		String userid = (String)request.getAttribute("userid");
+	%>
 	<div class="wrapper">
 		<header>
 			<!-- topHeader -->
@@ -29,31 +31,22 @@
 			<%@include file="/resources/static/jsp/nav.jsp" %>
 		</header>
 		<main  class="layout">
-				<form action="" style="width:400px;margin:50px auto;">
-					<div class="m-3" style="position:relative;">
-						
-						<div class="profileBox" style="margin:15px auto;width:150px;height:150px;border:1px solid lightgray;border-radius:50%;">
-							<img src="${pageContext.request.contextPath}/profile/image?username=${username}"  style="width:100%;height:100%;border : 1px solid;border-radius:50%;"/>
-						</div>
-						<div class="profileUploadBtn" style="padding:5px;position:absolute;left:67%;top:80%;cursor:pointer">
-							<span class="material-symbols-outlined">image</span>
-						</div>
-					</div>
+				<form style="width:400px;margin:50px auto;">
 					<div class="m-3">
 						<label for="">USERNAME : </label>
-						<input type="text" class="form-control"  />
+						<input type="text" class="form-control" name="userid"/>
 					</div>
 					<div class="m-3">
 						<label for="">PASSWORD : </label>
-						<input type="text" class="form-control" />
+						<input type="text" class="form-control" name="password"/>
 					</div>	
 					<div class="m-3">
 						<label for="">ROLE : </label>
-						<input type="text" class="form-control" />
+						<input type="text" class="form-control" name="role" readonly/>
 					</div>				
 					<div class="m-3">
-						<a href="" class="btn btn-success me-2">수정요청</a>
-						<a href="" class="btn btn-secondary">이전으로</a>
+						<button formaction="${pageContext.request.contextPath}/user/myinfo?userid=${userid}}" class="btn btn-success me-2">수정요청</button>
+						<button formaction="${pageContext.request.contextPath}/" class="btn btn-secondary">이전으로</button>
 					</div>				
 				</form>
 		</main>
