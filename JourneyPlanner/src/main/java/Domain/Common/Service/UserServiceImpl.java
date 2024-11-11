@@ -114,10 +114,10 @@ public class UserServiceImpl {
 		try {
 			int result = userDaoImpl.update(dto);
 			if(result >0) {
-				returnVal.put("isUpdate", true);
+				returnVal.put("isUpdated", true);
 				returnVal.put("message", "회원 정보수정 완료");
 			}else {
-				returnVal.put("isUpdate", false);
+				returnVal.put("isUpdated", false);
 				returnVal.put("message","회원 정보수정 실패");
 			}
 			
