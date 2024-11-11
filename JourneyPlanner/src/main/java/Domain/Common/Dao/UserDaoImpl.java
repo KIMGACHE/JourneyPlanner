@@ -53,12 +53,12 @@ public int insert(UserDto dto) throws Exception {
 }
 
 //회원 단건 조회
-public UserDto select(int userid) throws SQLException {
+public UserDto select(String userid) throws SQLException {
 	UserDto dto = null;
 	try {
 		conn = DBConnect.getInstance().getConnection();
 		pstmt = conn.prepareStatement("select * from tbl_user where userid=?");
-		pstmt.setInt(1, userid);
+		pstmt.setString(1, userid);
 		
 		rs = pstmt.executeQuery();
 		if(rs!=null) {

@@ -15,6 +15,9 @@ import Controller.Planner.PlannerListController;
 import Controller.Planner.PlannerReadController;
 import Controller.Planner.PlannerUpdateController;
 import Controller.User.UserJoinController;
+import Controller.User.UserLoginController;
+import Controller.User.UserLogoutController;
+import Controller.User.UserMyInfoController;
 
 
 public class FrontController extends HttpServlet {
@@ -36,6 +39,9 @@ public class FrontController extends HttpServlet {
 
 		// User
 		map.put(path + "/user/join", new UserJoinController());
+		map.put(path + "/user/login",new UserLoginController());
+		map.put(path + "/user/logout",new UserLogoutController());
+		map.put(path + "/user/myinfo", new UserMyInfoController());
 		
 		// Planner
 		map.put(path + "/planner/add", new PlannerAddController());

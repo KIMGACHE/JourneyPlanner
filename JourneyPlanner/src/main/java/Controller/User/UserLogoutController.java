@@ -1,21 +1,18 @@
 package Controller.User;
 
-import java.net.URLEncoder;
-import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
-import Domain.Common.Dto.UserDto;
 import Domain.Common.Service.UserServiceImpl;
 
-public class UserLoginController implements SubController{
+public class UserLogoutController implements SubController{
 
 	private UserServiceImpl userService;
 	
-	public UserLoginController() throws ServletException {
+	public UserLogoutController() throws ServletException {
 		
 		try {
 			this.userService = UserServiceImpl.getInstance();
@@ -47,42 +44,20 @@ public class UserLoginController implements SubController{
 			//Method==GET -> 페이지 표시(Forwarding)
 			String method = req.getMethod();
 			if("GET".equals(method)) {
-				System.out.println("[BC] GET /login..");
-				req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+				System.out.println("[BC] GET /logout..");
+			
+				HttpSession session = req.getSession();
+				//session.removeAttribute("role");
+				//session.removeAttribute("username");
+				session.invalidate();
+				
+				resp.sendRedirect(req.getContextPath() + "/");
 				return ;
 			}
 			
 			//Method==POST-> 회원가입
 			
 			
-			// 파라미터 받기
-			String userid = req.getParameter("username");
-			String password = req.getParameter("password");
-		
-			
-			// 유효성 확인
-			if(!isValid(null)) {
-				//
-			}
-			
-			// 서비스 실행
-			UserDto userDto = new UserDto(userid,password,null,0,null);
-			
-			Map<String,Object> rValue = userService.login(userDto, req.getSession());
-			
-			
-			boolean isLogined = (boolean)rValue.get("success");
-			String message = (String)rValue.get("message");
-			
-			// 뷰로이동(내용전달 - ?)
-			if(isLogined) {
-				resp.sendRedirect(req.getContextPath() +"/?message=" + URLEncoder.encode(message,"UTF-8"));
-				return ;
-			}else {
-				req.setAttribute("message", message);
-				req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
-				return ;
-			}
 			
 			
 			
@@ -96,7 +71,7 @@ public class UserLoginController implements SubController{
 					 try{  throw new ServletException(e1); }catch(Exception e2) {e2.printStackTrace();}
 				}
 
-			System.out.println("[유저컨] Exception 발생.." + e);
+			System.out.println("[BC] Exception 발생.." + e);
 		}
 		
 		

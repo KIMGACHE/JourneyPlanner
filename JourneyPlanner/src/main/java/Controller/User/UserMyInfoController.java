@@ -1,8 +1,5 @@
 package Controller.User;
 
-import java.net.URLEncoder;
-import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,28 +8,24 @@ import Controller.SubController;
 import Domain.Common.Dto.UserDto;
 import Domain.Common.Service.UserServiceImpl;
 
-public class UserLoginController implements SubController{
+public class UserMyInfoController implements SubController {
 
 	private UserServiceImpl userService;
 	
-	public UserLoginController() throws ServletException {
-		
+	public UserMyInfoController() throws ServletException {
 		try {
 			this.userService = UserServiceImpl.getInstance();
-		
-		}catch(Exception e) {
-			//예외핸들러로 전달
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			ExceptionHandler(e,null,null);
+			//예외 처리 함수로 던지기
 		}
-	
 	}
-	
-	//예외처리함수
+
 	public void ExceptionHandler(Exception e,HttpServletRequest req,HttpServletResponse resp) throws ServletException{
 		try {
 			req.setAttribute("exception", e);
 			req.getRequestDispatcher("/WEB-INF/view/user/error.jsp").forward(req, resp);
-		
 		}catch(Exception ex) {
 			throw new ServletException(ex);
 		}
@@ -47,42 +40,26 @@ public class UserLoginController implements SubController{
 			//Method==GET -> 페이지 표시(Forwarding)
 			String method = req.getMethod();
 			if("GET".equals(method)) {
-				System.out.println("[BC] GET /login..");
-				req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+				System.out.println("[BC] GET /myinfo..");
+				req.getRequestDispatcher("/WEB-INF/view/user/myinfo.jsp").forward(req, resp);
 				return ;
 			}
 			
-			//Method==POST-> 회원가입
-			
-			
-			// 파라미터 받기
-			String userid = req.getParameter("username");
+			//Method==POST-> 도서 등록처리
+				
+			//파라미터 받기
+			String username = req.getParameter("username");
 			String password = req.getParameter("password");
-		
-			
+			String role = req.getParameter("role");
+
 			// 유효성 확인
 			if(!isValid(null)) {
 				//
 			}
 			
 			// 서비스 실행
-			UserDto userDto = new UserDto(userid,password,null,0,null);
-			
-			Map<String,Object> rValue = userService.login(userDto, req.getSession());
-			
-			
-			boolean isLogined = (boolean)rValue.get("success");
-			String message = (String)rValue.get("message");
-			
-			// 뷰로이동(내용전달 - ?)
-			if(isLogined) {
-				resp.sendRedirect(req.getContextPath() +"/?message=" + URLEncoder.encode(message,"UTF-8"));
-				return ;
-			}else {
-				req.setAttribute("message", message);
-				req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
-				return ;
-			}
+			UserDto userDto = new UserDto(username,password,role,0,null);
+			boolean isJoined = userService.userJoin(userDto);
 			
 			
 			
@@ -96,7 +73,7 @@ public class UserLoginController implements SubController{
 					 try{  throw new ServletException(e1); }catch(Exception e2) {e2.printStackTrace();}
 				}
 
-			System.out.println("[유저컨] Exception 발생.." + e);
+			System.out.println("[BC] Exception 발생.." + e);
 		}
 		
 		
@@ -106,4 +83,10 @@ public class UserLoginController implements SubController{
 		return true;
 	}
 
+	
+	
+	
+	
+	
+	
 }
