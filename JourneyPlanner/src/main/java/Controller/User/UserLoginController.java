@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
 import Domain.Common.Dto.UserDto;
@@ -67,7 +68,8 @@ public class UserLoginController implements SubController{
 			
 			// 서비스 실행
 			UserDto userDto = new UserDto(userid,password,null,0,null);
-			HttpSession
+			HttpSession session = req.getSession();
+			session.setAttribute("userid", userDto.getUserid());
 			Map<String,Object> rValue = userService.login(userDto, req.getSession());
 			
 			

@@ -34,16 +34,23 @@
 				<form style="width:400px;margin:50px auto;">
 					<div class="m-3">
 						<label for="">USERNAME : </label>
-						<input type="text" class="form-control" name="userid"/>
+						<input type="text" class="form-control" name="userid" readonly/>
 					</div>
 					<div class="m-3">
 						<label for="">PASSWORD : </label>
-						<input type="text" class="form-control" name="password"/>
+						<input type="password" class="form-control" name="password"/>
 					</div>	
 					<div class="m-3">
 						<label for="">ROLE : </label>
 						<input type="text" class="form-control" name="role" readonly/>
-					</div>				
+					</div>
+					<div class="m-3">
+							<label for="">성별 : </label>
+							<select class="form-select"  name="gender">
+								<option value="M" selected>Male</option>
+								<option value="F">Female</option>
+							</select>
+						</div>
 					<div class="m-3">
 						<button formaction="${pageContext.request.contextPath}/user/myinfo?userid=${userid}}" class="btn btn-success me-2">수정요청</button>
 						<button formaction="${pageContext.request.contextPath}/" class="btn btn-secondary">이전으로</button>

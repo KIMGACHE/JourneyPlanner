@@ -1,5 +1,8 @@
 package Controller.User;
 
+import java.net.URLEncoder;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +58,8 @@ public class UserMyInfoController implements SubController {
 			String username = req.getParameter("username");
 			String password = req.getParameter("password");
 			String role = req.getParameter("role");
+			int age = Integer.parseInt(req.getParameter("age"));
+			String gender = req.getParameter("gender");
 
 			// 유효성 확인
 			if(!isValid(null)) {
@@ -62,8 +67,19 @@ public class UserMyInfoController implements SubController {
 			}
 			
 			// 서비스 실행
-			UserDto userDto = new UserDto(username,password,role,0,null);
-			boolean isJoined = userService.userJoin(userDto);
+			UserDto userDto = new UserDto(username,password,role,age,gender);
+			Map<String,Object> rvalue = userService.userUpdate(userDto);
+			String message = (String)rvalue.get("message");
+			boolean isUpdated = (Boolean)rvalue.get("isUpdated");
+			
+			if(isUpdated) {
+				resp.sendRedirect(req.getContextPath() +"/user/myinfo?userid=${userid}" );
+				return ;
+			} else {
+				req.setAttribute("message", message);
+				req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
+				return ;
+			}
 			
 			
 			
