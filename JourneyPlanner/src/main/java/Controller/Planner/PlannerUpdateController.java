@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
 import Domain.Common.Dto.PlannerDto;
@@ -38,18 +39,28 @@ public class PlannerUpdateController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /planner/update..");
+				Integer plannerid = (Integer)req.getAttribute("plannerid");
+				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);
+				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");
+				req.setAttribute("plannerDto", plannerDto);
 				req.getRequestDispatcher("/WEB-INF/view/planner/update.jsp").forward(req, resp);
 				return ;
 			}
 			
 			// Method==POST
 			// 파라미터 받기
+			HttpSession session = req.getSession();
+			if(session.getAttribute("userid")==null) {
+				resp.sendRedirect(req.getContextPath()+"/user/login");
+				return ;
+			}
+			String userid = (String)session.getAttribute("userid");
 			Integer plannerid = Integer.parseInt(req.getParameter("plannerid"));
 			Integer areacode = Integer.parseInt(req.getParameter("areacode"));
 			Integer citycode = Integer.parseInt(req.getParameter("citycode"));
 			LocalDate startdate = LocalDate.parse(req.getParameter("startdate"),DateTimeFormatter.ISO_LOCAL_DATE);
 			LocalDate enddate = LocalDate.parse(req.getParameter("enddate"),DateTimeFormatter.ISO_LOCAL_DATE);
-			PlannerDto plannerDto = new PlannerDto(0,areacode,citycode,startdate,enddate);
+			PlannerDto plannerDto = new PlannerDto(0,areacode,citycode,startdate,enddate,userid);
 			System.out.println(plannerDto);
 			// 유효성검사
 			

@@ -38,29 +38,13 @@ public class PlannerReadController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /planner/read..");
+				Integer plannerid = Integer.parseInt(req.getParameter("plannerid"));
+				System.out.println("plannerid" + plannerid);
+				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);
+				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");
+				req.setAttribute("plannerDto", plannerDto);
 				req.getRequestDispatcher("/WEB-INF/view/planner/read.jsp").forward(req, resp);
 				return ;
-			}
-			
-			// Method==POST
-			// 파라미터 받기
-			Integer areacode = Integer.parseInt(req.getParameter("areacode"));
-			Integer citycode = Integer.parseInt(req.getParameter("citycode"));
-			LocalDate startdate = LocalDate.parse(req.getParameter("startdate"),DateTimeFormatter.ISO_LOCAL_DATE);
-			LocalDate enddate = LocalDate.parse(req.getParameter("enddate"),DateTimeFormatter.ISO_LOCAL_DATE);
-			PlannerDto plannerDto = new PlannerDto(0,areacode,citycode,startdate,enddate);
-			System.out.println(plannerDto);
-			// 유효성검사
-			
-			// 서비스실행
-			Map<String,Object> rvalue = plannerService.plannerAdd(plannerDto);
-			Boolean isAdded = (Boolean)rvalue.get("isAdded");
-			if(isAdded!=null && isAdded) {
-				// 뷰로이동
-				System.out.println("뷰로이동");
-				resp.sendRedirect(req.getContextPath()+"/");
-			} else {
-				req.getRequestDispatcher("/WEB-INF/view/planner/add.jsp").forward(req, resp);
 			}
 			
 		} catch(Exception e) {

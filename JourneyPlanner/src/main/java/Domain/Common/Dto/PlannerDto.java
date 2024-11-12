@@ -8,16 +8,19 @@ public class PlannerDto {
 	private int citycode;
 	private LocalDate startdate;
 	private LocalDate enddate;
+	private String userid;
 	
 	public PlannerDto() {}
-	
-	public PlannerDto(int plannerid, int areacode, int citycode, LocalDate startdate, LocalDate enddate) {
+
+	public PlannerDto(int plannerid, int areacode, int citycode, LocalDate startdate, LocalDate enddate,
+			String userid) {
 		super();
 		this.plannerid = plannerid;
 		this.areacode = areacode;
 		this.citycode = citycode;
 		this.startdate = startdate;
 		this.enddate = enddate;
+		this.userid = userid;
 	}
 
 	public int getPlannerid() {
@@ -60,9 +63,17 @@ public class PlannerDto {
 		this.enddate = enddate;
 	}
 
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
 	@Override
 	public String toString() {
 		return "PlannerDto [plannerid=" + plannerid + ", areacode=" + areacode + ", citycode=" + citycode
-				+ ", startdate=" + startdate + ", enddate=" + enddate + "]";
+				+ ", startdate=" + startdate + ", enddate=" + enddate + ", userid=" + userid + "]";
 	}
 }

@@ -42,12 +42,12 @@
 								<option value="7">경기도</option>
 								<option value="8">충청북도</option>
 								<option value="9">충청남도</option>
-								<option value="11">전라남도</option>
-								<option value="12">전라북도</option>
-								<option value="13">경상북도</option>
-								<option value="14">경상남도</option>
-								<option value="15">강원도</option>
-								<option value="16">제주도</option>
+								<option value="10">전라남도</option>
+								<option value="11">전라북도</option>
+								<option value="12">경상북도</option>
+								<option value="13">경상남도</option>
+								<option value="14">강원도</option>
+								<option value="15">제주도</option>
 							</select>
 						</div>
 						<div class="m-3">
@@ -62,12 +62,12 @@
 									<option value="7">경기도</option>
 									<option value="8">충청북도</option>
 									<option value="9">충청남도</option>
-									<option value="11">전라남도</option>
-									<option value="12">전라북도</option>
-									<option value="13">경상북도</option>
-									<option value="14">경상남도</option>
-									<option value="15">강원도</option>
-									<option value="16">제주도</option>
+									<option value="10">전라남도</option>
+									<option value="11">전라북도</option>
+									<option value="12">경상북도</option>
+									<option value="13">경상남도</option>
+									<option value="14">강원도</option>
+									<option value="15">제주도</option>
 								</select>
 						</div>
 						<div class="m-3">

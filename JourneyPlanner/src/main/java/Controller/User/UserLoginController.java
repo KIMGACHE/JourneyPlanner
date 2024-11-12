@@ -59,7 +59,8 @@ public class UserLoginController implements SubController{
 			// 파라미터 받기
 			String userid = req.getParameter("username");
 			String password = req.getParameter("password");
-		
+			int age = Integer.parseInt(req.getParameter("age"));
+			String gender = req.getParameter("gender");
 			
 			// 유효성 확인
 			if(!isValid(null)) {
@@ -67,9 +68,9 @@ public class UserLoginController implements SubController{
 			}
 			
 			// 서비스 실행
-			UserDto userDto = new UserDto(userid,password,null,0,null);
+			UserDto userDto = new UserDto(userid,password,"ROLE_USER",age,gender);
 			HttpSession session = req.getSession();
-			session.setAttribute("userid", userDto.getUserid());
+			session.setAttribute("userDto", userDto);
 			Map<String,Object> rValue = userService.login(userDto, req.getSession());
 			
 			

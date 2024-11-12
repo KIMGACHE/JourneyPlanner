@@ -56,10 +56,12 @@
 							</select>
 						</div>
 					<div class="m-3">
-						<button formaction="${pageContext.request.contextPath}/user/myinfo?userid=<%=userDto.getUserid() %>" class="btn btn-success me-2">수정요청</button>
+						<button formaction="${pageContext.request.contextPath}/user/myinfo?userid=<%=userDto.getUserid()%>" class="btn btn-success me-2">수정요청</button>
 						<button formaction="${pageContext.request.contextPath}/" class="btn btn-secondary">이전으로</button>
 					</div>
 				</form>
+				
+				
 		</main>
 		
 		

@@ -46,8 +46,7 @@ public class UserMyInfoController implements SubController {
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /myinfo..");
 				HttpSession session = req.getSession();
-				String userid = (String)session.getAttribute("userid");
-				UserDto userDto = userService.getUser(userid);
+				UserDto userDto = (UserDto)session.getAttribute("userDto");
 				req.setAttribute("userDto", userDto);
 				req.getRequestDispatcher("/WEB-INF/view/user/myinfo.jsp").forward(req, resp);
 				return ;
@@ -56,7 +55,7 @@ public class UserMyInfoController implements SubController {
 			//Method==POST-> 도서 등록처리
 				
 			//파라미터 받기
-			String username = req.getParameter("userid");
+			String userid = req.getParameter("userid");
 			String password = req.getParameter("password");
 			String role = req.getParameter("role");
 			Integer age = Integer.parseInt(req.getParameter("age"));
@@ -68,13 +67,15 @@ public class UserMyInfoController implements SubController {
 			}
 			
 			// 서비스 실행
-			UserDto userDto = new UserDto(username,password,role,age,gender);
+			UserDto userDto = new UserDto(userid,password,role,age,gender);
+			HttpSession session = req.getSession();
+			session.setAttribute("userid", userid);
 			Map<String,Object> rvalue = userService.userUpdate(userDto);
 			String message = (String)rvalue.get("message");
 			Boolean isUpdated = (Boolean)rvalue.get("isUpdated");
 			
 			if(isUpdated) {
-				resp.sendRedirect(req.getContextPath() +"/user/myinfo?userid=${userid}" );
+				resp.sendRedirect(req.getContextPath() +"/user/myinfo" );
 				return ;
 			} else {
 				req.setAttribute("message", message);

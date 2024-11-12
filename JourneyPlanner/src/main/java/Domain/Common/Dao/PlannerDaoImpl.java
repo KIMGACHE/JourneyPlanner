@@ -35,11 +35,12 @@ public class PlannerDaoImpl {
 	// Insert
 	public boolean insert(PlannerDto plannerDto) throws ClassNotFoundException, SQLException {
 		init();
-		pstmt = conn.prepareStatement("insert into tbl_planner values(null,?,?,?,?)");
+		pstmt = conn.prepareStatement("insert into tbl_planner values(null,?,?,?,?,?)");
 		pstmt.setInt(1, plannerDto.getAreacode());
 		pstmt.setInt(2, plannerDto.getCitycode());
 		pstmt.setDate(3,Date.valueOf(plannerDto.getStartdate()));
 		pstmt.setDate(4,Date.valueOf(plannerDto.getEnddate()));
+		pstmt.setString(5, plannerDto.getUserid());
 		
 		int result = pstmt.executeUpdate();
 		
@@ -92,9 +93,10 @@ public class PlannerDaoImpl {
 				dto = new PlannerDto();
 				dto.setPlannerid(plannerid);
 				dto.setAreacode(rs.getInt("areacode"));
-				dto.setCitycode(rs.getInt("areacode"));
+				dto.setCitycode(rs.getInt("citycode"));
 				dto.setStartdate(rs.getDate("startdate").toLocalDate());
 				dto.setEnddate(rs.getDate("enddate").toLocalDate());
+				dto.setUserid(rs.getString("userid"));
 			}
 		}
 		
@@ -118,9 +120,10 @@ public class PlannerDaoImpl {
 				dto = new PlannerDto();
 				dto.setPlannerid(rs.getInt("plannerid"));
 				dto.setAreacode(rs.getInt("areacode"));
-				dto.setCitycode(rs.getInt("areacode"));
+				dto.setCitycode(rs.getInt("citycode"));
 				dto.setStartdate(rs.getDate("startdate").toLocalDate());
 				dto.setEnddate(rs.getDate("enddate").toLocalDate());
+				dto.setUserid(rs.getString("userid"));
 				list.add(dto);
 			}
 		}

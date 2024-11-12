@@ -56,7 +56,7 @@ public class UserJoinController implements SubController{
 			Map<String,Object> rValue = userService.userJoin(userDto);
 			
 			
-			boolean isJoined = (boolean)rValue.get("success");
+			boolean isJoined = (boolean)rValue.get("isJoined");
 			String message = (String)rValue.get("message");
 			
 			// 뷰로이동(내용전달 - ?)

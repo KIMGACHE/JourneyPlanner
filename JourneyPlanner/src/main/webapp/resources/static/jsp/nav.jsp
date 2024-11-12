@@ -12,11 +12,11 @@
    
         <li class="nav-item dropdown m-4 " >
           <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            도서관리
+            플래너
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/book/add">도서등록</a></li>
-            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/book/list">도서조회</a></li>
+            		<li><a class="dropdown-item" href="${pageContext.request.contextPath}/planner/add">플래너 작성하기</a></li>
+            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/planner/list">플래너 조회하기</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown m-4">
