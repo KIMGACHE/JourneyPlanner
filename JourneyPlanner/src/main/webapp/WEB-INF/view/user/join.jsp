@@ -24,10 +24,13 @@
 		<main  class="layout">
 				
 				<section>
-					
+					<%String message = (String)request.getAttribute("message"); %>
 					<form action="${pageContext.request.contextPath}/user/join" method="post"  style="width:400px;">
 						<div class="m-3">
 							<h1>회원가입 페이지</h1>
+						</div>
+						<div class="message" style="color:red;">
+							${message}
 						</div>
 						<div class="m-3">
 							<label for="">아이디 : </label>

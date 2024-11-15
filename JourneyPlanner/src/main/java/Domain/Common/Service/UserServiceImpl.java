@@ -129,23 +129,14 @@ public class UserServiceImpl {
 	}
 	
 	//로그인
-		public Map<String, Object> login(UserDto userDto, HttpSession session) throws Exception {
+		public Map<String, Object> login(UserDto userDto) throws Exception {
 			//TX Start
 			Map<String,Object> returnValue=null;
 			try {
 					returnValue = new HashMap();
 					//로그인된 상태인지 확인(tbl_Session에서 session조회)
-					
-					String username = (String)session.getAttribute("username");
-					String role = (String)session.getAttribute("role");
-					
-					
-					if(username!=null || role !=null) {
-						returnValue.put("success", false);
-						returnValue.put("message", "로그인된 상태입니다.");
-						return returnValue;
-					
-					}
+					String userid = userDto.getUserid();
+					String role = userDto.getRole();
 					
 					//요청한 username 과 동일한 계정이 있는지확인(tbl_user)
 					UserDto dbUserDto = userDaoImpl.select(userDto.getUserid());
@@ -162,12 +153,7 @@ public class UserServiceImpl {
 						returnValue.put("success", false);
 						returnValue.put("message", "패스워드가 일치하지 않습니다.");
 						return returnValue;		
-					}
-					
-					//session객체 생성후 table 저장
-					session.setAttribute("username",dbUserDto.getUserid());
-					session.setAttribute("role",dbUserDto.getRole());
-					
+					}		
 					
 					//sessionId를 반환
 					returnValue.put("success", true);

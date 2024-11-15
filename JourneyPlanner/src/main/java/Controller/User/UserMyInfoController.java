@@ -69,13 +69,14 @@ public class UserMyInfoController implements SubController {
 			// 서비스 실행
 			UserDto userDto = new UserDto(userid,password,role,age,gender);
 			HttpSession session = req.getSession();
-			session.setAttribute("userid", userid);
+			System.out.println("UserDto : " + userDto);
 			Map<String,Object> rvalue = userService.userUpdate(userDto);
 			String message = (String)rvalue.get("message");
 			Boolean isUpdated = (Boolean)rvalue.get("isUpdated");
 			
 			if(isUpdated) {
-				resp.sendRedirect(req.getContextPath() +"/user/myinfo" );
+				session.setAttribute("userDto", userDto);
+				resp.sendRedirect(req.getContextPath() +"/" );
 				return ;
 			} else {
 				req.setAttribute("message", message);

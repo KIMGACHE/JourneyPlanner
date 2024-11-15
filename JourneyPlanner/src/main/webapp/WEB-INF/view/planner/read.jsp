@@ -15,6 +15,8 @@
 <body>
 	<%
 		PlannerDto plannerDto = (PlannerDto)request.getAttribute("plannerDto");
+		UserDto userDto = (UserDto)request.getAttribute("userDto");
+		String message = (String)request.getAttribute("message");
 	%>
 	<div class="wrapper">
 		<header>
@@ -27,7 +29,7 @@
 				
 				<section>
 					
-					<form method="post"  style="width:400px;">
+					<form method="GET"  style="width:400px;">
 						<div class="m-3">
 							<h1>Planner 수정</h1>
 						</div>
@@ -81,7 +83,10 @@
 							<input type="date" class="form-control" name="enddate" readonly value="<%=plannerDto.getEnddate()%>"/>
 						</div>
 						<div class="m-3">
-							<button  class="btn btn-success" formaction="${pageContext.request.contextPath}/planner/update?plannerid=${plannerDto.getPlannerid()}">수정</button>
+						<%if(userDto!=null && userDto.getUserid().equals(plannerDto.getUserid())) {%>
+							<a  class="btn btn-success" href="${pageContext.request.contextPath}/planner/update?plannerid=<%=plannerDto.getPlannerid()%>">수정</a>
+							<a  class="btn btn-danger" href="${pageContext.request.contextPath}/planner/delete?plannerid=<%=plannerDto.getPlannerid()%>">삭제</a>
+						<%} %>
 							<button class="btn btn-secondary" formaction="${pageContext.request.contextPath}/planner/list">이전으로</button>
 						</div>											
 					</form>

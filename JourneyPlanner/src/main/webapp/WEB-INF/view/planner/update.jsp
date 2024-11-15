@@ -23,13 +23,14 @@
 		</header>
 		<main  class="layout">
 		<%
-				PlannerDto plannerDto = (PlannerDto)request.getAttribute("plannerDto");
+			PlannerDto plannerDto = (PlannerDto)request.getAttribute("plannerDto");
+			System.out.println("plannerDto : " + plannerDto);
 		%>
 				<section>
 					
-					<form method="post"  style="width:400px;" >
+					<form method="POST"  style="width:400px;" >
 						<div class="m-3">
-							<h1>Planner 작성</h1>
+							<h1>Planner 수정</h1>
 						</div>
 						<div class="m-3">
 							<label for="">지역</label>
@@ -74,14 +75,14 @@
 						</div>
 						<div class="m-3">
 							<label for="">출발일</label>
-							<input type="date" class="form-control" name="startdate" value="<%plannerDto.getStartdate()%>"/>
+							<input type="date" class="form-control" name="startdate" value="<%=plannerDto.getStartdate()%>" />
 						</div>
 						<div class="m-3">
 							<label for="">종료일</label>
-							<input type="date" class="form-control" name="enddate" value="<%plannerDto.getEnddate()%>"/>
+							<input type="date" class="form-control" name="enddate" value="<%=plannerDto.getEnddate()%>"/>
 						</div>
 						<div class="m-3">
-							<button  class="btn btn-success" formaction="${pageContext.request.contextPath}/planner/update">수정</button>
+							<button  class="btn btn-success" formaction="${pageContext.request.contextPath}/planner/update?plannerid=<%=plannerDto.getPlannerid()%>">수정</button>
 							<button class="btn btn-secondary" formaction="${pageContext.request.contextPath}/">이전으로</button>
 						</div>											
 					</form>

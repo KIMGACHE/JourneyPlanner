@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
 import Domain.Common.Dto.PlannerDto;
+import Domain.Common.Dto.UserDto;
 import Domain.Common.Service.PlannerServiceImpl;
 
 public class PlannerAddController implements SubController{
@@ -46,11 +47,12 @@ public class PlannerAddController implements SubController{
 			// Method==POST
 			// 파라미터 받기
 			HttpSession session = req.getSession();
-			if(session.getAttribute("userid")==null) {
+			if(session.getAttribute("userDto")==null) {
 				resp.sendRedirect(req.getContextPath()+"/user/login");
 				return ;
 			}
-			String userid = (String)session.getAttribute("userid");
+			UserDto userDto = (UserDto)session.getAttribute("userDto");
+			String userid = userDto.getUserid();
 			Integer areacode = Integer.parseInt(req.getParameter("areacode"));
 			Integer citycode = Integer.parseInt(req.getParameter("citycode"));
 			LocalDate startdate = LocalDate.parse(req.getParameter("startdate"),DateTimeFormatter.ISO_LOCAL_DATE);
@@ -65,7 +67,7 @@ public class PlannerAddController implements SubController{
 			if(isAdded!=null && isAdded) {
 				// 뷰로이동
 				System.out.println("뷰로이동");
-				resp.sendRedirect(req.getContextPath()+"/");
+				resp.sendRedirect(req.getContextPath()+"/planner/list");
 				return ;
 			} else {
 				req.getRequestDispatcher("/WEB-INF/view/planner/add.jsp").forward(req, resp);
