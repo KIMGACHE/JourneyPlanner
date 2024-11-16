@@ -7,9 +7,11 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
 import Domain.Common.Dto.PlannerDto;
+import Domain.Common.Dto.UserDto;
 import Domain.Common.Service.PlannerServiceImpl;
 
 public class PlannerUpdateController implements SubController{
@@ -38,19 +40,45 @@ public class PlannerUpdateController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /planner/update..");
+				HttpSession session = req.getSession();
+				UserDto userDto = (UserDto)session.getAttribute("userDto");
+				if(userDto==null) {
+					req.setAttribute("message", "로그인이 필요한 기능입니다.");
+					resp.sendRedirect(req.getContextPath()+"/user/login");
+					return ;
+				}
+				Integer plannerid = Integer.parseInt(req.getParameter("plannerid"));
+				System.out.println("planner ID : 제발->"+plannerid);
+				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);
+				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");
+				String userid = (String)plannerDto.getUserid();
+				if(!userid.equals(userDto.getUserid())) {
+					req.setAttribute("message", "해당 플래너의 작성자가 아닙니다.");
+					resp.sendRedirect(req.getContextPath()+"/user/read?plannerid=");
+					return ;
+				}
+				
+				req.setAttribute("plannerDto", plannerDto);
 				req.getRequestDispatcher("/WEB-INF/view/planner/update.jsp").forward(req, resp);
 				return ;
 			}
 			
 			// Method==POST
 			// 파라미터 받기
+			HttpSession session = req.getSession();
+			UserDto userDto = (UserDto)session.getAttribute("userDto");
+			if(userDto==null) {
+				req.setAttribute("message", "로그인이 필요한 기능입니다.");
+				resp.sendRedirect(req.getContextPath()+"/user/login");
+				return ;
+			}
+			String userid = userDto.getUserid();
 			Integer plannerid = Integer.parseInt(req.getParameter("plannerid"));
 			Integer areacode = Integer.parseInt(req.getParameter("areacode"));
 			Integer citycode = Integer.parseInt(req.getParameter("citycode"));
 			LocalDate startdate = LocalDate.parse(req.getParameter("startdate"),DateTimeFormatter.ISO_LOCAL_DATE);
 			LocalDate enddate = LocalDate.parse(req.getParameter("enddate"),DateTimeFormatter.ISO_LOCAL_DATE);
-			PlannerDto plannerDto = new PlannerDto(0,areacode,citycode,startdate,enddate);
-			System.out.println(plannerDto);
+			PlannerDto plannerDto = new PlannerDto(plannerid,areacode,citycode,startdate,enddate,userid);
 			// 유효성검사
 			
 			// 서비스실행
@@ -59,7 +87,7 @@ public class PlannerUpdateController implements SubController{
 			if(isUpdated!=null && isUpdated) {
 				// 뷰로이동
 				System.out.println("뷰로이동");
-				resp.sendRedirect(req.getContextPath()+"/"); // 나중에는 유저정보->본인의 플래너 ->해당플래너->수정->해당플래너 이런식
+				resp.sendRedirect(req.getContextPath()+"/planner/read?plannerid="+plannerid); // 나중에는 유저정보->본인의 플래너 ->해당플래너->수정->해당플래너 이런식
 			} else {
 				req.getRequestDispatcher("/WEB-INF/view/planner/update.jsp").forward(req, resp);
 			}

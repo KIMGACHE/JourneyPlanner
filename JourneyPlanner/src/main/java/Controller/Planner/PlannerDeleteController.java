@@ -14,10 +14,10 @@ import Domain.Common.Dto.PlannerDto;
 import Domain.Common.Dto.UserDto;
 import Domain.Common.Service.PlannerServiceImpl;
 
-public class PlannerReadController implements SubController{
+public class PlannerDeleteController implements SubController{
 	private PlannerServiceImpl plannerService;
 	
-	public PlannerReadController() {
+	public PlannerDeleteController() {
 		this.plannerService = PlannerServiceImpl.getInstance();
 	}
 	
@@ -39,18 +39,38 @@ public class PlannerReadController implements SubController{
 			// Method==GET
 			String method = req.getMethod();
 			if("GET".equals(method)) {
-				System.out.println("[PC] GET /planner/read..");
+				System.out.println("[PC] GET /planner/delete..");
 				
 				// session에 저장된 UserDto의 userid를 req에 담아서 read.jsp에 보내기 위함
 				HttpSession session = req.getSession();
 				UserDto userDto = (UserDto)session.getAttribute("userDto");
 				int plannerid = Integer.parseInt(req.getParameter("plannerid"));
-				
+				if(userDto==null) {
+					req.setAttribute("message", "로그인이 필요한 기능입니다.");
+					resp.sendRedirect(req.getContextPath()+"/user/login");
+					return ;
+				}
 				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);
 				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");
-				req.setAttribute("plannerDto", plannerDto);
-				req.setAttribute("userDto", userDto);
-				req.getRequestDispatcher("/WEB-INF/view/planner/read.jsp").forward(req, resp);
+				String userid = plannerDto.getUserid();
+				
+				if(!userid.equals(userDto.getUserid())) {
+					req.setAttribute("message", "해당 플래너의 작성자가 아닙니다.");
+					resp.sendRedirect(req.getContextPath()+"/user/list");
+					return ;
+				}
+				System.out.println("delete쪽 plannerid뭐임? : " +plannerid);
+				rvalue = plannerService.plannerDelete(plannerid);
+				Boolean isDeleted = (Boolean)rvalue.get("isDeleted");
+
+				if(isDeleted!=null && isDeleted) {
+					// 뷰로이동
+					System.out.println("뷰로이동");
+					resp.sendRedirect(req.getContextPath()+"/planner/list");
+				} else {
+					req.setAttribute("message", "플래너 삭제에 실패하였습니다.");
+					req.getRequestDispatcher("/WEB-INF/view/planner/read?plannerid="+plannerid).forward(req, resp);
+				}
 				return ;
 			}			
 		} catch(Exception e) {

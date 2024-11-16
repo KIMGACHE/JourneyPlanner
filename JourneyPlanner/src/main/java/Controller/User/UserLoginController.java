@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
 import Domain.Common.Dto.UserDto;
@@ -48,7 +49,7 @@ public class UserLoginController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /login..");
-				req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+				req.getRequestDispatcher("/WEB-INF/view/user/login.jsp").forward(req, resp);
 				return ;
 			}
 			
@@ -56,9 +57,8 @@ public class UserLoginController implements SubController{
 			
 			
 			// 파라미터 받기
-			String userid = req.getParameter("username");
+			String userid = req.getParameter("userid");
 			String password = req.getParameter("password");
-		
 			
 			// 유효성 확인
 			if(!isValid(null)) {
@@ -66,21 +66,21 @@ public class UserLoginController implements SubController{
 			}
 			
 			// 서비스 실행
-			UserDto userDto = new UserDto(userid,password,null,0,null);
-			
-			Map<String,Object> rValue = userService.login(userDto, req.getSession());
-			
+			UserDto userDto = userService.getUser(userid);
+			HttpSession session = req.getSession();
+			Map<String,Object> rValue = userService.login(userDto);
 			
 			boolean isLogined = (boolean)rValue.get("success");
 			String message = (String)rValue.get("message");
 			
 			// 뷰로이동(내용전달 - ?)
 			if(isLogined) {
+				session.setAttribute("userDto", userDto);
 				resp.sendRedirect(req.getContextPath() +"/?message=" + URLEncoder.encode(message,"UTF-8"));
 				return ;
 			}else {
 				req.setAttribute("message", message);
-				req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+				req.getRequestDispatcher("/WEB-INF/view/user/login.jsp").forward(req, resp);
 				return ;
 			}
 			

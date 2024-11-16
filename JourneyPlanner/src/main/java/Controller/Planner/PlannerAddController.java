@@ -7,9 +7,11 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
 import Domain.Common.Dto.PlannerDto;
+import Domain.Common.Dto.UserDto;
 import Domain.Common.Service.PlannerServiceImpl;
 
 public class PlannerAddController implements SubController{
@@ -44,11 +46,18 @@ public class PlannerAddController implements SubController{
 			
 			// Method==POST
 			// 파라미터 받기
+			HttpSession session = req.getSession();
+			if(session.getAttribute("userDto")==null) {
+				resp.sendRedirect(req.getContextPath()+"/user/login");
+				return ;
+			}
+			UserDto userDto = (UserDto)session.getAttribute("userDto");
+			String userid = userDto.getUserid();
 			Integer areacode = Integer.parseInt(req.getParameter("areacode"));
 			Integer citycode = Integer.parseInt(req.getParameter("citycode"));
 			LocalDate startdate = LocalDate.parse(req.getParameter("startdate"),DateTimeFormatter.ISO_LOCAL_DATE);
 			LocalDate enddate = LocalDate.parse(req.getParameter("enddate"),DateTimeFormatter.ISO_LOCAL_DATE);
-			PlannerDto plannerDto = new PlannerDto(0,areacode,citycode,startdate,enddate);
+			PlannerDto plannerDto = new PlannerDto(0,areacode,citycode,startdate,enddate,userid);
 			System.out.println(plannerDto);
 			// 유효성검사
 			
@@ -58,9 +67,11 @@ public class PlannerAddController implements SubController{
 			if(isAdded!=null && isAdded) {
 				// 뷰로이동
 				System.out.println("뷰로이동");
-				resp.sendRedirect(req.getContextPath()+"/");
+				resp.sendRedirect(req.getContextPath()+"/planner/list");
+				return ;
 			} else {
 				req.getRequestDispatcher("/WEB-INF/view/planner/add.jsp").forward(req, resp);
+				return ;
 			}
 			
 		} catch(Exception e) {

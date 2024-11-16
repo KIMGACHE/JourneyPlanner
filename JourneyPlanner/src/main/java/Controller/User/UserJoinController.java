@@ -1,6 +1,8 @@
 package Controller.User;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +39,7 @@ public class UserJoinController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /join..");
-				req.getRequestDispatcher("/WEB-INF/view/user/join.jsp");
+				req.getRequestDispatcher("/WEB-INF/view/user/join.jsp").forward(req, resp);
 				return ;
 			}
 			
@@ -51,11 +53,21 @@ public class UserJoinController implements SubController{
 			
 			// 유효성검사
 			
-			// 서비스실행
-			userService.userJoin(userDto);
+			Map<String,Object> rValue = userService.userJoin(userDto);
 			
-			// 뷰로이동
-			resp.sendRedirect(req.getContextPath()+"/user/join");
+			
+			boolean isJoined = (boolean)rValue.get("isJoined");
+			String message = (String)rValue.get("message");
+			
+			// 뷰로이동(내용전달 - ?)
+			if(isJoined) {
+				resp.sendRedirect(req.getContextPath() +"/?message=" + URLEncoder.encode(message,"UTF-8"));
+				return ;
+			}else {
+				req.setAttribute("message", message);
+				req.getRequestDispatcher("/WEB-INF/view/user/join.jsp").forward(req, resp);
+				return ;
+			}
 		} catch(Exception e) {
 			try {
 				ExceptionHandler(e, req, resp);

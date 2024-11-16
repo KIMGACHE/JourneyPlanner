@@ -123,11 +123,12 @@ public int update(UserDto dto) throws Exception {
 	int result = 0;
 	try {
 		conn = DBConnect.getInstance().getConnection();
-		pstmt= conn.prepareStatement("update tbl_user set password=?,role=?,age=? where userid=?");
+		pstmt= conn.prepareStatement("update tbl_user set password=?,role=?,age=?, gender=? where userid=?");
 		pstmt.setString(1, dto.getPassword());
 		pstmt.setString(2, dto.getRole());
 		pstmt.setInt(3, dto.getAge());
-		pstmt.setString(4, dto.getUserid());
+		pstmt.setString(4, dto.getGender());
+		pstmt.setString(5, dto.getUserid());
 
 		result = pstmt.executeUpdate();
 

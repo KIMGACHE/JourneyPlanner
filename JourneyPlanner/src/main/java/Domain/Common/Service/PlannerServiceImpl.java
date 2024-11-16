@@ -105,5 +105,23 @@ public class PlannerServiceImpl {
 		return rvalue;
 	}
 	
-	// ??
+	public Map<String, Object> plannerSelect(int plannerid) {
+		Map<String,Object> rvalue = new HashMap();
+		try {
+			PlannerDto dto = plannerDaoImpl.select(plannerid);
+			if(dto!=null) {
+				rvalue.put("isSelected", true);
+				rvalue.put("dto", dto);
+				rvalue.put("message", "플래너를 전체 조회하였습니다.");
+			} else {
+				rvalue.put("isSelected", false);
+				rvalue.put("message", "플래너 조회에 실패하였습니다.");
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return rvalue;
+	}
 }
