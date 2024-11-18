@@ -56,14 +56,8 @@ public class UserMyInfoController implements SubController {
 				req.setAttribute("userDto", userDto);
 				
 				//PlannerDto조회
-				Map<String,Object> plannerResult = plannerService.plannerList();
-				List<PlannerDto> allPlanners = (List<PlannerDto>) plannerResult.get("list");
-				List<PlannerDto> plannerDto = new ArrayList();
-				for(PlannerDto planner : allPlanners) {								//로그인한 userid와 planner의 userid가 같을경우 특정 userid의 plannerDto 정보를 forward 처리
-					if(userDto.getUserid().equals(planner.getUserid())) {			
-						plannerDto.add(planner);
-					}
-				}
+				Map<String,Object> plannerResult = plannerService.plannerList(userDto.getUserid());//로그인한 userid와 planner의 userid가 같을경우 특정 userid의 plannerDto 정보를 forward 처리
+				List<PlannerDto> plannerDto = (List<PlannerDto>) plannerResult.get("list");
 				req.setAttribute("plannerDto", plannerDto);
 				req.getRequestDispatcher("/WEB-INF/view/user/myinfo.jsp").forward(req, resp);
 				return ;

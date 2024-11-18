@@ -44,7 +44,9 @@ public class PlannerReadController implements SubController{
 				// session에 저장된 UserDto의 userid를 req에 담아서 read.jsp에 보내기 위함
 				HttpSession session = req.getSession();
 				UserDto userDto = (UserDto)session.getAttribute("userDto");
+				
 				int plannerid = Integer.parseInt(req.getParameter("plannerid"));
+				System.out.println("ㅇㅇ"+req.getParameter("plannerid"));
 				
 				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);
 				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");
