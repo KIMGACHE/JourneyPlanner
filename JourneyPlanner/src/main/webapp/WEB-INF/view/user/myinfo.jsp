@@ -86,12 +86,12 @@
 			            			PlannerDto planner = plannerDto.get(index);
 			            			index++;	
 			            		%>
-			          	  		<a href="${pageContext.request.contextPath }/user/detailPlan?plannerId=<%=planner.getPlannerid() %>">
+			          	  		<a href="${pageContext.request.contextPath}/planner/read?plannerid=<%=planner.getPlannerid() %>">
 			            			Planner ID : <%=planner.getPlannerid() %><br>
 			            		</a>
 			            	
 			            	</td>	
-			            		<% }else{  //planner 개수가 부족할 경우 빈 셀
+			            		<% }else{  //planner 개수가 부족할 경우 빈 셀.
 			            		%>
 			            		<!-- 빈 셀 --> &nbsp;
 			            		<% } %>
