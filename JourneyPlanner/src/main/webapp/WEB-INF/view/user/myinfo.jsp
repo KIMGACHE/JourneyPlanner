@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="Domain.Common.Dto.*"%>
+<%@page import = "java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<!-- link -->
 	<%@include file="/resources/static/jsp/link.jsp" %>
 	
-	<!-- myinfo.css -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/user/myinfo.css" />
+
 	
 	<script>
 		const path = "<%=request.getContextPath() %>";
@@ -31,7 +31,7 @@
 			<%@include file="/resources/static/jsp/nav.jsp" %>
 		</header>
 		<main  class="layout">
-				<form style="width:400px;margin:50px auto;" method="POST">
+				<form style="width:400px;margin:30px auto;" method="POST">
 					<div class="m-3">
 						<label for="">USERID : </label>
 						<input type="text" class="form-control" name="userid" readonly value="${userDto.getUserid()}"/>
@@ -60,7 +60,50 @@
 						<button formaction="${pageContext.request.contextPath}/" class="btn btn-secondary">이전으로</button>
 					</div>
 				</form>
-				
+				<div class="myPlan">
+					<table>
+						<thead>
+							<tr>
+							<th scope="col">정보1</th>
+							<th scope="col">정보2</th>
+							<th scope="col">정보3</th>
+						</tr>
+						</thead>
+						<tbody>
+						<%List<PlannerDto> plannerDto = (ArrayList<PlannerDto>)request.getAttribute("plannerDto"); %>
+						<%int totalCells = 9; // 3x3 테이블 고정
+			              int plannerCount = plannerDto != null && !plannerDto.isEmpty() ? plannerDto.size() : 0;	//Dto가 비어있다면 0
+			              int index = 0;	//각 칸에 들어갈 plannerID INDEX
+			              
+			              for(int row=0;row<3;row++){
+			            	  %>
+			            <tr>
+			            	<%for(int col=0;col<3;col++){
+			            		%>
+			            	<td>
+			            		<%
+			            		if(index < plannerCount){
+			            			PlannerDto planner = plannerDto.get(index);
+			            			index++;	
+			            		%>
+			          	  		<a href="${pageContext.request.contextPath }/user/detailPlan?plannerId=<%=planner.getPlannerid() %>">
+			            			Planner ID : <%=planner.getPlannerid() %><br>
+			            		</a>
+			            	
+			            	</td>	
+			            		<% }else{  //planner 개수가 부족할 경우 빈 셀
+			            		%>
+			            		<!-- 빈 셀 --> &nbsp;
+			            		<% } %>
+			            	<% } %>
+			            	
+			            </tr>
+						<% } %>
+
+						</tbody>
+
+					</table>
+				</div>
 				
 		</main>
 		

@@ -12,3 +12,7 @@
 
 <!-- common.js -->
 <script src="${pageContext.request.contextPath}/resources/static/js/common.js" defer></script>
+
+
+	<!-- myinfo.css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/css/user/myinfo.css" />

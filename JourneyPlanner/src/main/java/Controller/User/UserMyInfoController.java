@@ -1,6 +1,7 @@
 package Controller.User;
 
-import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -9,16 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Controller.SubController;
+import Domain.Common.Dto.PlannerDto;
 import Domain.Common.Dto.UserDto;
+import Domain.Common.Service.PlannerServiceImpl;
 import Domain.Common.Service.UserServiceImpl;
 
 public class UserMyInfoController implements SubController {
 
 	private UserServiceImpl userService;
+	private PlannerServiceImpl plannerService;
 	
 	public UserMyInfoController() throws ServletException {
 		try {
 			this.userService = UserServiceImpl.getInstance();
+			this.plannerService = PlannerServiceImpl.getInstance();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			ExceptionHandler(e,null,null);
@@ -46,8 +51,20 @@ public class UserMyInfoController implements SubController {
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /myinfo..");
 				HttpSession session = req.getSession();
+				//userDto
 				UserDto userDto = (UserDto)session.getAttribute("userDto");
 				req.setAttribute("userDto", userDto);
+				
+				//PlannerDto조회
+				Map<String,Object> plannerResult = plannerService.plannerList();
+				List<PlannerDto> allPlanners = (List<PlannerDto>) plannerResult.get("list");
+				List<PlannerDto> plannerDto = new ArrayList();
+				for(PlannerDto planner : allPlanners) {								//로그인한 userid와 planner의 userid가 같을경우 특정 userid의 plannerDto 정보를 forward 처리
+					if(userDto.getUserid().equals(planner.getUserid())) {			
+						plannerDto.add(planner);
+					}
+				}
+				req.setAttribute("plannerDto", plannerDto);
 				req.getRequestDispatcher("/WEB-INF/view/user/myinfo.jsp").forward(req, resp);
 				return ;
 			}
@@ -83,7 +100,6 @@ public class UserMyInfoController implements SubController {
 				req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
 				return ;
 			}
-			
 			
 			
 		}catch(Exception e) {
