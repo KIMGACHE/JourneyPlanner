@@ -34,7 +34,7 @@
 				<form style="width:400px;margin:30px auto;" method="POST">
 					<div class="m-3">
 						<label for="">USERID : </label>
-						<input type="text" class="form-control" name="userid" readonly value="${userDto.getUserid()}"/>
+						<input type="text" class="form-control" name="userid" value="${userDto.getUserid()}" readonly/>
 					</div>
 					<div class="m-3">
 						<label for="">PASSWORD : </label>
@@ -56,7 +56,8 @@
 							</select>
 						</div>
 					<div class="m-3">
-						<button formaction="${pageContext.request.contextPath}/user/myinfo?userid=<%=userDto.getUserid()%>" class="btn btn-success me-2">수정요청</button>
+						<button class="btn btn-success" formaction="${pageContext.request.contextPath}/user/myinfo?userid=<%=userDto.getUserid()%>" class="btn btn-success me-2">수정요청</button>
+						<button class="btn btn-danger" formaction="${pageContext.request.contextPath}/user/delete">회원탈퇴</button>
 						<button formaction="${pageContext.request.contextPath}/" class="btn btn-secondary">이전으로</button>
 					</div>
 				</form>

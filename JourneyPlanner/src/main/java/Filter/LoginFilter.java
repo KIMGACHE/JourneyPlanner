@@ -31,7 +31,6 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession();
 		UserDto userDto = (UserDto)session.getAttribute("userDto");
 		if(userDto==null) {
-			System.out.println("권한이 없음!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			resp.sendRedirect(req.getContextPath()+"/user/login?message=" + URLEncoder.encode("로그인이 필요한 서비스입니다","UTF-8"));
 			return ;
 		}
