@@ -38,9 +38,10 @@ public class PlannerListController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /planner/list..");
-				Map<String,Object> rvalue = plannerService.plannerList();
-				req.setAttribute("list", rvalue.get("list"));
-				req.getRequestDispatcher("/WEB-INF/view/planner/list.jsp").forward(req, resp);
+				Map<String,Object> rvalue = plannerService.plannerList();	//비즈니스 로직 플래너 전체 조회 실행, dto 에 있는 모든 planner 리스트를 가져옴
+				req.setAttribute("list", rvalue.get("list"));		//request 객체에 리스트를 넣어줌
+				req.getRequestDispatcher("/WEB-INF/view/planner/list.jsp").forward(req, resp);	//받은 리스트 정보를 받은채로 list 페이지로 forwarding
+				
 				return ;
 			}
 			

@@ -15,7 +15,9 @@ ul{
 	margin:0;padding:0;
 }
 body{
-	margin:0;padding:0;
+ margin: 0;
+    padding: 0;
+ 
 }
 .layout{
 	padding : 0 150px;
@@ -66,10 +68,18 @@ body{
 .wrapper>main{
 	min-height:calc(100vh - 100px - 150px );
 	padding-top : 50px;
+	font-size:3rem;
 }
 .wrapper>footer{
 	height : 150px;
 
+}
+
+.title{
+	width:300px;
+	
+	position:absolute;
+	top:5%;
 }
 
 

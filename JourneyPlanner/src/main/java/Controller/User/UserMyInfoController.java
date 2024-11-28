@@ -23,10 +23,10 @@ public class UserMyInfoController implements SubController {
 	public UserMyInfoController() throws ServletException {
 		try {
 			this.userService = UserServiceImpl.getInstance();
-			this.plannerService = PlannerServiceImpl.getInstance();
+			this.plannerService = PlannerServiceImpl.getInstance();	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			ExceptionHandler(e,null,null);
+			ExceptionHandler(e,null,null);	
 			//예외 처리 함수로 던지기
 		}
 	}
@@ -47,7 +47,7 @@ public class UserMyInfoController implements SubController {
 		
 		try {
 			//Method==GET -> 페이지 표시(Forwarding)
-			String method = req.getMethod();
+			String method = req.getMethod();		
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /myinfo..");
 				HttpSession session = req.getSession();

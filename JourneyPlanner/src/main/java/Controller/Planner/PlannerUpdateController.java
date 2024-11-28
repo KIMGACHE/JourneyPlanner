@@ -40,35 +40,35 @@ public class PlannerUpdateController implements SubController{
 			String method = req.getMethod();
 			if("GET".equals(method)) {
 				System.out.println("[BC] GET /planner/update..");
-				HttpSession session = req.getSession();
-				UserDto userDto = (UserDto)session.getAttribute("userDto");
+				HttpSession session = req.getSession();		//세션 정보 받아옴
+				UserDto userDto = (UserDto)session.getAttribute("userDto");	//session에 있는 userDto 정보 받아옴
 				if(userDto==null) {
-					req.setAttribute("message", "로그인이 필요한 기능입니다.");
-					resp.sendRedirect(req.getContextPath()+"/user/login");
+					req.setAttribute("message", "로그인이 필요한 기능입니다.");	//userDto가 존재하지 않다면 로그인 필요 메시지 띄움
+					resp.sendRedirect(req.getContextPath()+"/user/login"); //다시 로그인창으로 리다이렉트
 					return ;
 				}
-				Integer plannerid = Integer.parseInt(req.getParameter("plannerid"));
-				System.out.println("planner ID : 제발->"+plannerid);
-				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);
-				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");
-				String userid = (String)plannerDto.getUserid();
-				if(!userid.equals(userDto.getUserid())) {
+				Integer plannerid = Integer.parseInt(req.getParameter("plannerid"));	//plannerid 파싱
+				System.out.println("planner ID : 제발->"+plannerid);		
+				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);	//특정 plannerid dto 가져옴	
+				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");			//plannerDto 의 가져옴
+				String userid = (String)plannerDto.getUserid();		//특정 plannerDto 의 userId 가져옴
+				if(!userid.equals(userDto.getUserid())) {		//세션에 있는 로그인된 userId 와 특정 plannerDto 의 userId가 같지 않다면
 					req.setAttribute("message", "해당 플래너의 작성자가 아닙니다.");
-					resp.sendRedirect(req.getContextPath()+"/user/read?plannerid=");
+					resp.sendRedirect(req.getContextPath()+"/user/read?plannerid=");	
 					return ;
 				}
 				
 				req.setAttribute("plannerDto", plannerDto);
-				req.getRequestDispatcher("/WEB-INF/view/planner/update.jsp").forward(req, resp);
+				req.getRequestDispatcher("/WEB-INF/view/planner/update.jsp").forward(req, resp);	//작성자가 맞을시 update페이지로 이동
 				return ;
 			}
 			
 			// Method==POST
 			// 파라미터 받기
 			HttpSession session = req.getSession();
-			UserDto userDto = (UserDto)session.getAttribute("userDto");
+			UserDto userDto = (UserDto)session.getAttribute("userDto");		//POST 일 시에  session 에서 userDto 받아옴
 			if(userDto==null) {
-				req.setAttribute("message", "로그인이 필요한 기능입니다.");
+				req.setAttribute("message", "로그인이 필요한 기능입니다.");	//session 에 정보가 없다면 로그인 페이지로 이동
 				resp.sendRedirect(req.getContextPath()+"/user/login");
 				return ;
 			}
@@ -82,11 +82,11 @@ public class PlannerUpdateController implements SubController{
 			// 유효성검사
 			
 			// 서비스실행
-			Map<String,Object> rvalue = plannerService.plannerUpdate(plannerDto);
-			Boolean isUpdated = (Boolean)rvalue.get("isUpdated");
-			if(isUpdated!=null && isUpdated) {
+			Map<String,Object> rvalue = plannerService.plannerUpdate(plannerDto);	
+			Boolean isUpdated = (Boolean)rvalue.get("isUpdated");	//비즈니스 로직 실행
+			if(isUpdated!=null && isUpdated) {	//업데이트가 실행되었을 시에는
 				// 뷰로이동
-				System.out.println("뷰로이동");
+				System.out.println("뷰로이동");	//다시 정보창으로 리다이렉트
 				resp.sendRedirect(req.getContextPath()+"/planner/read?plannerid="+plannerid); // 나중에는 유저정보->본인의 플래너 ->해당플래너->수정->해당플래너 이런식
 			} else {
 				req.getRequestDispatcher("/WEB-INF/view/planner/update.jsp").forward(req, resp);

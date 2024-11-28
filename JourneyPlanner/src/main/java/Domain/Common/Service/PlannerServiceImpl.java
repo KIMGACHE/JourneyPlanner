@@ -132,7 +132,7 @@ public class PlannerServiceImpl {
 			if(dto!=null) {
 				rvalue.put("isSelected", true);
 				rvalue.put("dto", dto);
-				rvalue.put("message", "플래너를 전체 조회하였습니다.");
+				rvalue.put("message", "플래너를 조회하였습니다.");
 			} else {
 				rvalue.put("isSelected", false);
 				rvalue.put("message", "플래너 조회에 실패하였습니다.");

@@ -19,7 +19,7 @@
 			<%@include file="/resources/static/jsp/nav.jsp" %>
 		</header>
 		<main  class="layout">
-				INDEX
+				김병관 만세
 		</main>
 		
 		
