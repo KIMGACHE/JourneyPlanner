@@ -21,11 +21,11 @@
         </li>
         <li class="nav-item dropdown m-4">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            도서대여
+            플래너정보
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">대여신청</a></li>
-            <li><a class="dropdown-item" href="#">대여조회</a></li>
+            <li><a class="dropdown-item" href="${pageContext.request.contextPath }/map/map">지도</a></li>
+            <li><a class="dropdown-item" href="#">랭킹페이지 ?</a></li>
           </ul>
         </li>
         

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Controller.Map.MapController;
 import Controller.Planner.PlannerAddController;
 import Controller.Planner.PlannerDeleteController;
 import Controller.Planner.PlannerListController;
@@ -50,6 +51,8 @@ public class FrontController extends HttpServlet {
 		map.put(path + "/planner/list", new PlannerListController());
 		map.put(path + "/planner/read", new PlannerReadController());
 		map.put(path + "/planner/delete", new PlannerDeleteController());
+		
+		map.put(path + "/map/map", new MapController());
 
 	}
 
