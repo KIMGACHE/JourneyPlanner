@@ -68,7 +68,6 @@ body{
 .wrapper>main{
 	min-height:calc(100vh - 100px - 150px );
 	padding-top : 50px;
-	font-size:3rem;
 }
 .wrapper>footer{
 	height : 150px;
