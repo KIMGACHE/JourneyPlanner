@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="Domain.Common.Dto.*"%>
 
-<div class="top-header layout  bg-warning text-light">
+<div class="top-header layout  bg-success text-light">
 	
 	<!-- <div class="title">김병관 만세</div> -->
 	

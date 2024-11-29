@@ -22,7 +22,7 @@
 			index
 		</main>
 		
-		
+
 		<!-- footer -->
 		<%@include file="/resources/static/jsp/footer.jsp" %>
 	</div>
