@@ -60,20 +60,21 @@ public class UserLoginController implements SubController{
 			String userid = req.getParameter("userid");
 			String password = req.getParameter("password");
 			
-			// 유효성 확인
-			if(!isValid(null)) {
-				//
-			}
 			
 			// 서비스 실행
-			UserDto userDto = userService.getUser(userid);
 			HttpSession session = req.getSession();
-			Map<String,Object> rValue = userService.login(userDto);
+			if(session.getAttribute("userDto")!=null) {
+				resp.sendRedirect(req.getContextPath() +"/?message=" + URLEncoder.encode("이미 로그인된 상태입니다.","UTF-8"));
+				return ;
+			}
+			Map<String,Object> rValue = userService.login(userid,password);
 			
 			boolean isLogined = (boolean)rValue.get("success");
 			String message = (String)rValue.get("message");
+			UserDto userDto = userService.getUser(userid);
 			
-			// 뷰로이동(내용전달 - ?)
+			
+			// 뷰로이동 (userDto session에 저장)
 			if(isLogined) {
 				session.setAttribute("userDto", userDto);
 				resp.sendRedirect(req.getContextPath() +"/?message=" + URLEncoder.encode(message,"UTF-8"));

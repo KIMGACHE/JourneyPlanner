@@ -11,7 +11,6 @@ public class HomeController implements SubController{
 		try {
 			System.out.println("[HC] GET /");
 			req.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
-		
 		}catch(Exception e) {
 			
 		}

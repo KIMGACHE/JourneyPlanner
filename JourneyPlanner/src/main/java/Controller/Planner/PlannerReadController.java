@@ -46,13 +46,12 @@ public class PlannerReadController implements SubController{
 				UserDto userDto = (UserDto)session.getAttribute("userDto");
 				
 				int plannerid = Integer.parseInt(req.getParameter("plannerid"));
-				System.out.println("ㅇㅇ"+req.getParameter("plannerid"));
 				
-				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);
-				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");
+				Map<String,Object> rvalue = plannerService.plannerSelect(plannerid);	//비즈니스 로직으로 플래너 id 를 가져온다
+				PlannerDto plannerDto = (PlannerDto)rvalue.get("dto");				//planner id 에 맞는 dto 정보를 가져옴
 				req.setAttribute("plannerDto", plannerDto);
 				req.setAttribute("userDto", userDto);
-				req.getRequestDispatcher("/WEB-INF/view/planner/read.jsp").forward(req, resp);
+				req.getRequestDispatcher("/WEB-INF/view/planner/read.jsp").forward(req, resp);	// planner 정보와 user 정보를 가지고 read.jsp 로 forwarding
 				return ;
 			}			
 		} catch(Exception e) {

@@ -49,13 +49,13 @@ public class UserLogoutController implements SubController{
 				HttpSession session = req.getSession();
 				//session.removeAttribute("role");
 				//session.removeAttribute("username");
+				// 현재 세션 종료 => 세션에 저장된 속성 제거 
 				session.invalidate();
 				
 				resp.sendRedirect(req.getContextPath() + "/");
 				return ;
 			}
 			
-			//Method==POST-> 회원가입
 			
 			
 			

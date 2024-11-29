@@ -129,17 +129,14 @@ public class UserServiceImpl {
 	}
 	
 	//로그인
-		public Map<String, Object> login(UserDto userDto) throws Exception {
+		public Map<String, Object> login(String userid, String password) throws Exception {
 			//TX Start
 			Map<String,Object> returnValue=null;
 			try {
 					returnValue = new HashMap();
-					//로그인된 상태인지 확인(tbl_Session에서 session조회)
-					String userid = userDto.getUserid();
-					String role = userDto.getRole();
 					
 					//요청한 username 과 동일한 계정이 있는지확인(tbl_user)
-					UserDto dbUserDto = userDaoImpl.select(userDto.getUserid());
+					UserDto dbUserDto = userDaoImpl.select(userid);
 					if(dbUserDto==null) {
 						returnValue.put("success", false);
 						returnValue.put("message", "계정이 존재하지 않습니다.");
@@ -147,9 +144,8 @@ public class UserServiceImpl {
 					}
 					
 					//요청한 password 가 db에 저장된 password와 동일한지 확인
-					String pw = userDto.getPassword();	//RAW
 					String dbPw = dbUserDto.getPassword();		//en
-					if(!pw.equals(dbPw)) {
+					if(!password.equals(dbPw)) {
 						returnValue.put("success", false);
 						returnValue.put("message", "패스워드가 일치하지 않습니다.");
 						return returnValue;		

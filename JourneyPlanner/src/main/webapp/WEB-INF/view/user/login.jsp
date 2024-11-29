@@ -24,13 +24,11 @@
 		<main  class="layout">
 				
 				<section>
-					<%String message = (String)request.getAttribute("message"); %>
+					
 					<form action="${pageContext.request.contextPath}/user/login" method="post"  style="width:400px;">
+						<div style="color:red;">${message}</div>
 						<div class="m-3">
 							<h1>로그인 페이지</h1>
-							<%if(message!=null) {%>
-								<span><%=message %></span>
-							<%} %>
 						</div>
 						<div class="m-3">
 							<label for="">아이디 : </label>

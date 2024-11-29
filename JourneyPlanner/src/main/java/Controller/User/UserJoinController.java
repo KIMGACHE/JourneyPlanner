@@ -59,7 +59,7 @@ public class UserJoinController implements SubController{
 			boolean isJoined = (boolean)rValue.get("isJoined");
 			String message = (String)rValue.get("message");
 			
-			// 뷰로이동(내용전달 - ?)
+			// 뷰로이동(내용전달)
 			if(isJoined) {
 				resp.sendRedirect(req.getContextPath() +"/?message=" + URLEncoder.encode(message,"UTF-8"));
 				return ;

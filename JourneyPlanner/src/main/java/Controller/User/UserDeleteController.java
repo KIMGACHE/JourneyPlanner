@@ -36,36 +36,46 @@ public class UserDeleteController implements SubController{
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			String method = req.getMethod();
+			// 메서드가 포스트인지 확인
 			if("POST".equals(method)) {
-				// Method==POST
-				// 파라미터 받기
-				HttpSession session = req.getSession();
-				
+
+				// 요청 파라미터 받기
 				String userid = req.getParameter("userid");
 				String password = req.getParameter("password");
 				Integer age = Integer.parseInt(req.getParameter("age"));
 				String gender = req.getParameter("gender");
+				
+				// 파라미터로 Dto 객체 생성
 				UserDto userDto = new UserDto(userid,password,"ROLE_USER",age,gender);
 				
-				// 유효성검사
+				// UserLoginController에서 로그인 성공 시 session에 데이터를 담는대 그걸 다시 들고옴
+				HttpSession session = req.getSession();
+				
+				// session으로 로그인 유무 확인
+				// session정보가 없으면 로그인 페이지로 redirect
 				if(session==null) {
 					System.out.println("!");
 					resp.sendRedirect(req.getContextPath() + "/user/login?message=" + URLEncoder.encode("로그인이 필요한 서비스입니다.","UTF-8"));
 					return ;
 				}
+				// session에 담긴 userdto를 불러옴
 				UserDto SessionUserDto = (UserDto)session.getAttribute("userDto");
+				// session에 담긴 userdto의 id와 파라미터상의 id를 비교해서 다르면 redirect
 				if(!userid.equals(SessionUserDto.getUserid())) {
 					System.out.println("?");
 					resp.sendRedirect(req.getContextPath() + "/user/login?message=" + URLEncoder.encode("로그인이 필요한 서비스입니다.","UTF-8"));
 					return ;
 				}
+				
+				// 삭제 메서드 실행 후 결과를 rValue에 저장
+				// rValue => [{ 'isQuit' : boolean },{ 'message' : String }]
 				Map<String,Object> rValue = userService.userQuit(userDto);
 				
 				
 				boolean isQuit = (boolean)rValue.get("isQuit");
 				String message = (String)rValue.get("message");
 				
-				// 뷰로이동(내용전달 - ?)
+				// isQuit로 성공유무 확인후 리다이렉트
 				if(isQuit) {
 					session.invalidate();
 					resp.sendRedirect(req.getContextPath() +"/?message=" + URLEncoder.encode(message,"UTF-8"));
